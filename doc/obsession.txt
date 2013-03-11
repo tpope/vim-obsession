@@ -1,0 +1,27 @@
+*obsession.txt*  Continuously updated session files
+
+Author:  Tim Pope <http://tpo.pe/>
+Repo:    https://github.com/tpope/vim-obsession
+License: Same terms as Vim itself (see |license|)
+
+USAGE                                           *obsession* *:Obsession*
+
+:Obsession {file}       Invoke |:mksession| on {file} and continue to keep it
+                        updated until Vim exits, triggering on the |BufEnter|
+                        and |VimLeavePre| autocommands.  If the file exists,
+                        it will be overwritten if and only if it looks like a
+                        session file.
+
+:Obsession {dir}        Invoke |:Obsession| on {dir}/Session.vim.  Use "." to
+                        write to a session file in the current directory.
+
+:Obsession              If a previous session has been loaded, invoke
+                        |:Obsession| on that file.  Otherwise, invoke
+                        |:Obsession| on the current directory.
+
+:Obsession!             Stop obsession and delete the underlying session file.
+
+Loading a session created with |:Obsession| automatically resumes updates to
+that file.
+
+ vim:tw=78:et:ft=help:norl:
