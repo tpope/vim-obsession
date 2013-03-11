@@ -21,7 +21,7 @@ no-hassle Vim sessions is a few tweaks:
 
 Use `:Obsess` (with optional file/directory name) to start recording to a
 session file and `:Obsess!` to stop and throw it away.  That's it.  Load a
-session in the usual matter: `vim -S`, or `:source` it.
+session in the usual manner: `vim -S`, or `:source` it.
 
 ## Installation
 
