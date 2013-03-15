@@ -61,9 +61,9 @@ endfunction
 augroup obsession
   autocmd!
   autocmd BufEnter,VimLeavePre * exe s:persist()
-  autocmd VimEnter *
+  autocmd VimEnter * nested
         \ if !argc() && empty(v:this_session) && filereadable('Session.vim') |
-        \   nested source Session.vim |
+        \   source Session.vim |
         \ endif
 augroup END
 
