@@ -16,7 +16,7 @@ function! s:dispatch(bang, file) abort
     unlet g:this_obsession
     return ''
   elseif empty(a:file) && exists('g:this_obsession')
-    unlet 'Disabling session tracking in '.g:this_obsession
+    echo 'Pausing session in '.g:this_obsession
     unlet g:this_obsession
     return ''
   elseif empty(a:file) && !empty(v:this_session)
@@ -39,6 +39,7 @@ function! s:dispatch(bang, file) abort
   let error = s:persist()
   if empty(error)
     echo 'Tracking session in '.file
+    let v:this_session = file
     return ''
   else
     return error
