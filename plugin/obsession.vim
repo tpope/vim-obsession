@@ -15,6 +15,10 @@ function! s:dispatch(bang, file) abort
     call delete(g:this_obsession)
     unlet g:this_obsession
     return ''
+  elseif empty(a:file) && exists('g:this_obsession')
+    unlet 'Disabling session tracking in '.g:this_obsession
+    unlet g:this_obsession
+    return ''
   elseif empty(a:file) && !empty(v:this_session)
     let file = v:this_session
   elseif empty(a:file)
