@@ -10,10 +10,10 @@ let g:loaded_obsession = 1
 command! -bar -bang -complete=file -nargs=? Obsession execute s:dispatch(<bang>0, <q-args>)
 
 function! s:dispatch(bang, file) abort
-  if a:bang && empty(a:file) && exists('g:this_obsession')
-    echo 'Deleting session in '.fnamemodify(g:this_obsession, ':~:.')
-    call delete(g:this_obsession)
-    unlet g:this_obsession
+  if a:bang && empty(a:file) && filereadable(v:this_session)
+    echo 'Deleting session in '.fnamemodify(v:this_obsession, ':~:.')
+    call delete(v:this_obsession)
+    unlet! g:this_obsession
     return ''
   elseif empty(a:file) && exists('g:this_obsession')
     echo 'Pausing session in '.fnamemodify(g:this_obsession, ':~:.')
