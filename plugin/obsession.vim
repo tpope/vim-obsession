@@ -23,10 +23,11 @@ function! s:dispatch(bang, file) abort
     let file = v:this_session
   elseif empty(a:file)
     let file = getcwd() . '/Session.vim'
-  elseif isdirectory(a:file)
-    let file = fnamemodify(expand(a:file), ':p') . '/Session.vim'
   else
     let file = fnamemodify(expand(a:file), ':p')
+    if isdirectory(a:file)
+      let file = file . '/Session.vim'
+    endif
   endif
   if !a:bang
      \ && file !~# 'Session\.vim$'
