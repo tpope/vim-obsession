@@ -24,7 +24,12 @@ function! s:dispatch(bang, file) abort
   elseif empty(a:file)
     let file = getcwd() . '/Session.vim'
   else
-    let file = fnamemodify(expand(a:file), ':p')
+    let file = expand(a:file, ':p')
+
+    if empty(file)
+      let file = fnamemodify(a:file, ':p')
+    endif
+
     if isdirectory(a:file)
       let file = file . '/Session.vim'
     endif
