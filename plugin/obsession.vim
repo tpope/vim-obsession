@@ -50,7 +50,7 @@ function! s:persist()
   if exists('g:this_obsession')
     let sessionoptions = &sessionoptions
     try
-      set sessionoptions-=options
+      set sessionoptions-=blank sessionoptions-=options
       execute 'mksession! '.fnameescape(g:this_obsession)
       call writefile(insert(readfile(g:this_obsession), 'let g:this_obsession = v:this_session', -2), g:this_obsession)
     catch
