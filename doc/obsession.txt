@@ -24,4 +24,17 @@ USAGE                                           *obsession* *:Obsession*
 Loading a session created with |:Obsession| automatically resumes updates to
 that file.
 
+STATUSLINE                                      *obsession-statusline*
+
+                                                *obsession#statusline()*
+Add %{obsession#statusline()} to your statusline to get an indication of
+Obsession's current tracking status.  If currently obsessing, the indicator
+will be '[Obsession]'.  If there is no obsession but a vim session exists, the
+indicator will be '[Session]'.
+
+If you don't have a statusline, this one matches the default when 'ruler' is
+set:
+>
+    set statusline=%<%f\ %h%m%r%{obsession#statusline()}%=%-14.(%l,%c%V%)\ %P
+<
  vim:tw=78:et:ft=help:norl:
