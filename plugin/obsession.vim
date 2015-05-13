@@ -50,7 +50,7 @@ function! s:dispatch(bang, file) abort
   endtry
 endfunction
 
-function! s:persist()
+function! s:persist() abort
   if exists('g:this_obsession')
     let sessionoptions = &sessionoptions
     try
