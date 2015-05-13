@@ -10,40 +10,44 @@ let g:loaded_obsession = 1
 command! -bar -bang -complete=file -nargs=? Obsession execute s:dispatch(<bang>0, <q-args>)
 
 function! s:dispatch(bang, file) abort
-  if a:bang && empty(a:file) && filereadable(get(g:, 'this_obsession', v:this_session))
-    echo 'Deleting session in '.fnamemodify(get(g:, 'this_obsession', v:this_session), ':~:.')
-    call delete(get(g:, 'this_obsession', v:this_session))
-    unlet! g:this_obsession
-    return ''
-  elseif empty(a:file) && exists('g:this_obsession')
-    echo 'Pausing session in '.fnamemodify(g:this_obsession, ':~:.')
-    unlet g:this_obsession
-    return ''
-  elseif empty(a:file) && !empty(v:this_session)
-    let file = v:this_session
-  elseif empty(a:file)
-    let file = getcwd() . '/Session.vim'
-  elseif isdirectory(a:file)
-    let file = fnamemodify(expand(a:file), ':p') . '/Session.vim'
-  else
-    let file = fnamemodify(expand(a:file), ':p')
-  endif
-  if !a:bang
-     \ && file !~# 'Session\.vim$'
-     \ && filereadable(file)
-     \ && getfsize(file) > 0
-     \ && readfile(file, '', 1)[0] !=# 'let SessionLoad = 1'
-    return 'mksession '.fnameescape(file)
-  endif
-  let g:this_obsession = file
-  let error = s:persist()
-  if empty(error)
-    echo 'Tracking session in '.fnamemodify(file, ':~:.')
-    let v:this_session = file
-    return ''
-  else
-    return error
-  endif
+  try
+    if a:bang && empty(a:file) && filereadable(get(g:, 'this_obsession', v:this_session))
+      echo 'Deleting session in '.fnamemodify(get(g:, 'this_obsession', v:this_session), ':~:.')
+      call delete(get(g:, 'this_obsession', v:this_session))
+      unlet! g:this_obsession
+      return ''
+    elseif empty(a:file) && exists('g:this_obsession')
+      echo 'Pausing session in '.fnamemodify(g:this_obsession, ':~:.')
+      unlet g:this_obsession
+      return ''
+    elseif empty(a:file) && !empty(v:this_session)
+      let file = v:this_session
+    elseif empty(a:file)
+      let file = getcwd() . '/Session.vim'
+    elseif isdirectory(a:file)
+      let file = fnamemodify(expand(a:file), ':p') . '/Session.vim'
+    else
+      let file = fnamemodify(expand(a:file), ':p')
+    endif
+    if !a:bang
+      \ && file !~# 'Session\.vim$'
+      \ && filereadable(file)
+      \ && getfsize(file) > 0
+      \ && readfile(file, '', 1)[0] !=# 'let SessionLoad = 1'
+      return 'mksession '.fnameescape(file)
+    endif
+    let g:this_obsession = file
+    let error = s:persist()
+    if empty(error)
+      echo 'Tracking session in '.fnamemodify(file, ':~:.')
+      let v:this_session = file
+      return ''
+    else
+      return error
+    endif
+  finally
+    let &readonly = &readonly
+  endtry
 endfunction
 
 function! s:persist()
@@ -55,6 +59,7 @@ function! s:persist()
       call writefile(insert(readfile(g:this_obsession), 'let g:this_obsession = v:this_session', -2), g:this_obsession)
     catch
       unlet g:this_obsession
+      let &readonly = &readonly
       return 'echoerr '.string(v:exception)
     finally
       let &sessionoptions = sessionoptions
