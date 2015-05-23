@@ -68,6 +68,18 @@ function! s:persist() abort
   return ''
 endfunction
 
+function! ObsessionIndicator(fmt, ...) abort
+  let fmt = type(a:fmt) == 1 && a:fmt =~# '^[^%]*%s[^%]*$' ? a:fmt : '[%s]'
+  if empty(v:this_session)
+    return ''
+  elseif exists('g:this_obsession')
+    let status = 'Obsession'
+  else
+    let status = 'Session'
+  endif
+  return printf(fmt, status)
+endfunction
+
 augroup obsession
   autocmd!
   autocmd BufEnter,VimLeavePre * exe s:persist()

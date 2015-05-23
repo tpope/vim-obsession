@@ -24,4 +24,10 @@ USAGE                                           *obsession* *:Obsession*
 Loading a session created with |:Obsession| automatically resumes updates to
 that file.
 
+STATUSLINE INDICATOR                            *obsession-indicator*
+
+                                                *ObsessionIndicator()*
+Add %{ObsessionIndicator('[%s]')} to 'statusline' or 'titlestring' to get an
+indicator when a session file is in use.
+
  vim:tw=78:et:ft=help:norl:

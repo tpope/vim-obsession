@@ -23,6 +23,9 @@ Use `:Obsess` (with optional file/directory name) to start recording to a
 session file and `:Obsess!` to stop and throw it away.  That's it.  Load a
 session in the usual manner: `vim -S`, or `:source` it.
 
+There's also a statusline/title indicator you can use.  See
+`:help obsession-indicator`.
+
 ## Installation
 
 If you don't have a preferred installation method, I recommend
