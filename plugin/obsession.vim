@@ -68,6 +68,16 @@ function! s:persist() abort
   return ''
 endfunction
 
+function! obsession#statusline()
+  let vim_session = !empty(v:this_session)
+  if exists('g:this_obsession') && vim_session
+    let status = 'Obsession'
+  elseif vim_session
+    let status = 'Session'
+  endif
+  return exists('status') ? '['.status.']' : ''
+endfunction
+
 augroup obsession
   autocmd!
   autocmd BufEnter,VimLeavePre * exe s:persist()
