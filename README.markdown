@@ -31,6 +31,7 @@ then simply copy and paste:
 
     cd ~/.vim/bundle
     git clone git://github.com/tpope/vim-obsession.git
+    vim -u NONE -c "helptags vim-obsession/doc" -c q
 
 ## Self-Promotion
 
