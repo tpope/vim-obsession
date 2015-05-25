@@ -68,8 +68,11 @@ function! s:persist() abort
   return ''
 endfunction
 
-function! ObsessionIndicator(fmt, ...) abort
-  let fmt = type(a:fmt) == 1 && a:fmt =~# '^[^%]*%s[^%]*$' ? a:fmt : '[%s]'
+function! ObsessionStatus(...) abort
+  if !a:0
+    return !empty(v:this_session) + exists('g:this_obsession')
+  endif
+  let fmt = type(a:1) == type('') && a:1 =~# '^[^%]*%s[^%]*$' ? a:1 : '[%s]'
   if empty(v:this_session)
     return ''
   elseif exists('g:this_obsession')
