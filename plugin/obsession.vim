@@ -69,8 +69,11 @@ function! s:persist() abort
 endfunction
 
 function! ObsessionStatus(...) abort
+  let numeric = !empty(v:this_session) + exists('g:this_obsession')
   if !a:0
-    return !empty(v:this_session) + exists('g:this_obsession')
+    return numeric
+  elseif a:0 > 1
+    return get(a:000, 2-numeric, '')
   endif
   let fmt = type(a:1) == type('') && a:1 =~# '^[^%]*%s[^%]*$' ? a:1 : '[%s]'
   if empty(v:this_session)
