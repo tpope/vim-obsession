@@ -7,21 +7,23 @@ if exists("g:loaded_obsession") || v:version < 700 || &cp
 endif
 let g:loaded_obsession = 1
 
-command! -bar -bang -complete=file -nargs=? Obsession execute s:dispatch(<bang>0, <q-args>)
+command! -bar -bang -complete=file -nargs=? Obsession
+      \ execute s:dispatch(<bang>0, <q-args>)
 
 function! s:dispatch(bang, file) abort
+  let session = get(g:, 'this_obsession', v:this_session)
   try
-    if a:bang && empty(a:file) && filereadable(get(g:, 'this_obsession', v:this_session))
-      echo 'Deleting session in '.fnamemodify(get(g:, 'this_obsession', v:this_session), ':~:.')
-      call delete(get(g:, 'this_obsession', v:this_session))
+    if a:bang && empty(a:file) && filereadable(session)
+      echo 'Deleting session in '.fnamemodify(session, ':~:.')
+      call delete(session)
       unlet! g:this_obsession
       return ''
     elseif empty(a:file) && exists('g:this_obsession')
-      echo 'Pausing session in '.fnamemodify(g:this_obsession, ':~:.')
+      echo 'Pausing session in '.fnamemodify(session, ':~:.')
       unlet g:this_obsession
       return ''
-    elseif empty(a:file) && !empty(v:this_session)
-      let file = v:this_session
+    elseif empty(a:file) && !empty(session)
+      let file = session
     elseif empty(a:file)
       let file = getcwd() . '/Session.vim'
     elseif isdirectory(a:file)
@@ -51,12 +53,14 @@ function! s:dispatch(bang, file) abort
 endfunction
 
 function! s:persist() abort
+  let sessionoptions = &sessionoptions
   if exists('g:this_obsession')
-    let sessionoptions = &sessionoptions
     try
       set sessionoptions-=blank sessionoptions-=options
       execute 'mksession! '.fnameescape(g:this_obsession)
-      call writefile(insert(readfile(g:this_obsession), 'let g:this_obsession = v:this_session', -2), g:this_obsession)
+      let body = readfile(g:this_obsession)
+      call insert(body, 'let g:this_obsession = v:this_session', -2)
+      call writefile(body, g:this_obsession)
     catch
       unlet g:this_obsession
       let &readonly = &readonly
@@ -69,19 +73,19 @@ function! s:persist() abort
 endfunction
 
 function! ObsessionStatus(...) abort
-  let numeric = !empty(v:this_session) + exists('g:this_obsession')
+  let numeric = !empty(s:this_session()) + exists('g:this_obsession')
   if !a:0
     return numeric
   elseif a:0 > 1
     return get(a:000, 2-numeric, '')
   endif
   let fmt = type(a:1) == type('') && a:1 =~# '^[^%]*%s[^%]*$' ? a:1 : '[%s]'
-  if empty(v:this_session)
-    return ''
-  elseif exists('g:this_obsession')
+  if numeric == 2
     let status = 'Obsession'
-  else
+  elseif numeric == 1
     let status = 'Session'
+  else
+    return ''
   endif
   return printf(fmt, status)
 endfunction
