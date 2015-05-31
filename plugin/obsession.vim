@@ -54,6 +54,9 @@ function! s:dispatch(bang, file) abort
 endfunction
 
 function! s:persist() abort
+  if exists('g:SessionLoad')
+    return ''
+  endif
   let sessionoptions = &sessionoptions
   if exists('g:this_obsession')
     try
