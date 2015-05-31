@@ -73,21 +73,22 @@ function! s:persist() abort
 endfunction
 
 function! ObsessionStatus(...) abort
-  let numeric = !empty(s:this_session()) + exists('g:this_obsession')
-  if !a:0
+  let args = copy(a:000)
+  let numeric = !empty(v:this_session) + exists('g:this_obsession')
+  if type(get(args, 0)) == type(0)
+    if !remove(args, 0)
+      return ''
+    endif
+  endif
+  if empty(args)
     return numeric
-  elseif a:0 > 1
-    return get(a:000, 2-numeric, '')
   endif
-  let fmt = type(a:1) == type('') && a:1 =~# '^[^%]*%s[^%]*$' ? a:1 : '[%s]'
-  if numeric == 2
-    let status = 'Obsession'
-  elseif numeric == 1
-    let status = 'Session'
+  if len(args) == 1 && numeric == 1
+    let fmt = args[0]
   else
-    return ''
+    let fmt = get(args, 2-numeric, '')
   endif
-  return printf(fmt, status)
+  return substitute(fmt, '%s', get(['', 'Session', 'Obsession'], numeric), 'g')
 endfunction
 
 augroup obsession
