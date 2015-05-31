@@ -28,8 +28,6 @@ STATUS INDICATOR                                *obsession-status*
 
                                                 *ObsessionStatus()*
 Add %{ObsessionStatus('[Obsession]','[Session]')} to 'statusline', 'tabline',
-or 'titlestring' to get an indicator when Obsession is active or paused.  For
-more advanced uses, ObsessionStatus() with no arguments returns 0, 1, and 2
-for inactive, paused, and active, respectively.
+or 'titlestring' to get an indicator when Obsession is active or paused.
 
  vim:tw=78:et:ft=help:norl:
