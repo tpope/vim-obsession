@@ -59,7 +59,7 @@ function! s:persist() abort
       set sessionoptions-=blank sessionoptions-=options
       execute 'mksession! '.fnameescape(g:this_obsession)
       let body = readfile(g:this_obsession)
-      call insert(body, 'let g:this_obsession = v:this_session', -2)
+      call insert(body, 'let g:this_obsession = v:this_session', -3)
       call writefile(body, g:this_obsession)
     catch
       unlet g:this_obsession
