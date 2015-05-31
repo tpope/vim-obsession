@@ -27,7 +27,8 @@ function! s:dispatch(bang, file) abort
     elseif empty(a:file)
       let file = getcwd() . '/Session.vim'
     elseif isdirectory(a:file)
-      let file = fnamemodify(expand(a:file), ':p') . '/Session.vim'
+      let file = substitute(fnamemodify(expand(a:file), ':p'), '[\/]$', '', '')
+            \ . '/Session.vim'
     else
       let file = fnamemodify(expand(a:file), ':p')
     endif
