@@ -101,6 +101,10 @@ endfunction
 augroup obsession
   autocmd!
   autocmd BufEnter,VimLeavePre * exe s:persist()
+  autocmd VimEnter * nested
+        \ if !argc() && empty(v:this_session) && filereadable('Session.vim') |
+        \   source Session.vim |
+        \ endif
 augroup END
 
 " vim:set et sw=2:
