@@ -49,7 +49,7 @@ function! s:dispatch(bang, file) abort
       return error
     endif
   finally
-    let &readonly = &readonly
+    let &l:readonly = &l:readonly
   endtry
 endfunction
 
@@ -70,7 +70,7 @@ function! s:persist() abort
       let g:this_session = g:this_obsession
     catch
       unlet g:this_obsession
-      let &readonly = &readonly
+      let &l:readonly = &l:readonly
       return 'echoerr '.string(v:exception)
     finally
       let &sessionoptions = sessionoptions
