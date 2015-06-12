@@ -88,7 +88,7 @@ function! ObsessionStatus(...) abort
     endif
   endif
   if empty(args)
-    return numeric
+    let args = ['[$]', '[S]']
   endif
   if len(args) == 1 && numeric == 1
     let fmt = args[0]
@@ -101,6 +101,7 @@ endfunction
 augroup obsession
   autocmd!
   autocmd BufEnter,VimLeavePre * exe s:persist()
+  autocmd User Flags call Hoist('global', '%{ObsessionStatus()}')
 augroup END
 
 " vim:set et sw=2:
