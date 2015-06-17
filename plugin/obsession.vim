@@ -82,7 +82,7 @@ endfunction
 function! ObsessionStatus(...) abort
   let args = copy(a:000)
   let numeric = !empty(v:this_session) + exists('g:this_obsession')
-  if type(get(args, 0)) == type(0)
+  if type(get(args, 0, '')) == type(0)
     if !remove(args, 0)
       return ''
     endif
@@ -101,7 +101,7 @@ endfunction
 augroup obsession
   autocmd!
   autocmd BufEnter,VimLeavePre * exe s:persist()
-  autocmd User Flags call Hoist('global', '%{ObsessionStatus()}')
+  autocmd User Flags call Hoist('global', 'ObsessionStatus')
 augroup END
 
 " vim:set et sw=2:
