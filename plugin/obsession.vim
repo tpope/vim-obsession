@@ -68,6 +68,14 @@ function! s:persist() abort
       call insert(body, 'let g:this_obsession_status = 2', -3)
       call writefile(body, g:this_obsession)
       let g:this_session = g:this_obsession
+      if exists('#User#Obsession')
+        try
+          let [save_mls, &modelines] = [&mls, 0]
+          doautocmd User Obsession
+        finally
+          let &mls = save_mls
+        endtry
+      endif
     catch
       unlet g:this_obsession
       let &l:readonly = &l:readonly
