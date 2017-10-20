@@ -30,6 +30,6 @@ STATUS INDICATOR                                *obsession-status*
 Add %{ObsessionStatus()} to 'statusline', 'tabline', or 'titlestring' to get
 an indicator when Obsession is active or paused.  Pass an argument to override
 the text of the indicator and a second argument to override the text of the
-paused indictor.
+paused indicator.
 
  vim:tw=78:et:ft=help:norl:
