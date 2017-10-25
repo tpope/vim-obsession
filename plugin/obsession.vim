@@ -66,7 +66,9 @@ function! s:persist() abort
       call insert(body, 'let g:this_session = v:this_session', -3)
       call insert(body, 'let g:this_obsession = v:this_session', -3)
       call insert(body, 'let g:this_obsession_status = 2', -3)
-      call writefile(filter(body, 'v:val != "set winheight=1 winwidth=1"'), g:this_obsession)
+      call filter(body, 'v:val != "set winheight=1 winwidth=1"')
+      call filter(body, 'v:val != "set winminheight=1 winminwidth=1 winheight=1 winwidth=1"')
+      call writefile(body, g:this_obsession)
       let g:this_session = g:this_obsession
       if exists('#User#Obsession')
         try
