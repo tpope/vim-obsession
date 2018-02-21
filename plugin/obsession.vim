@@ -1,6 +1,7 @@
 " obsession.vim - Continuously updated session files
 " Maintainer:   Tim Pope <http://tpo.pe/>
 " Version:      1.0
+" GetLatestVimScripts: 4472 1 :AutoInstall: obsession.vim
 
 if exists("g:loaded_obsession") || v:version < 700 || &cp
   finish
@@ -66,6 +67,11 @@ function! s:persist() abort
       call insert(body, 'let g:this_session = v:this_session', -3)
       call insert(body, 'let g:this_obsession = v:this_session', -3)
       call insert(body, 'let g:this_obsession_status = 2', -3)
+      if exists('g:obsession_append')
+        for line in type(g:obsession_append) == type('') ? split(g:obsession_append, "\n") : g:obsession_append
+          call insert(body, line, -3)
+        endfor
+      endif
       call writefile(body, g:this_obsession)
       let g:this_session = g:this_obsession
       if exists('#User#Obsession')
@@ -108,7 +114,11 @@ endfunction
 
 augroup obsession
   autocmd!
-  autocmd BufEnter,VimLeavePre * exe s:persist()
+  autocmd VimLeavePre * exe s:persist()
+  autocmd BufEnter *
+        \ if !get(g:, 'obsession_no_bufenter') |
+        \   exe s:persist() |
+        \ endif
   autocmd User Flags call Hoist('global', 'ObsessionStatus')
 augroup END
 
