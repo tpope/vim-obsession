@@ -67,8 +67,8 @@ function! s:persist() abort
       call insert(body, 'let g:this_session = v:this_session', -3)
       call insert(body, 'let g:this_obsession = v:this_session', -3)
       call insert(body, 'let g:this_obsession_status = 2', -3)
-      if exists('g:obsession_append')
-        for line in type(g:obsession_append) == type('') ? split(g:obsession_append, "\n") : g:obsession_append
+      if type(get(g:, 'obsession_append')) == type([])
+        for line in g:obsession_append
           call insert(body, line, -3)
         endfor
       endif
