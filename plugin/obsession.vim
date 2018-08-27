@@ -54,6 +54,18 @@ function! s:dispatch(bang, file) abort
   endtry
 endfunction
 
+function! s:doautocmd_user(arg) abort
+  if !exists('#User#' . a:arg)
+    return ''
+  elseif v:version >= 704 && 0
+    return 'doautocmd <nomodeline> User ' . fnameescape(a:arg)
+  else
+    return 'try | let [save_mls, &mls] = [&mls, 0] | ' .
+          \ 'doautocmd <nomodeline> User ' . fnameescape(a:arg) . ' | ' .
+          \ 'finally | let &mls = save_mls | endtry'
+  endif
+endfunction
+
 function! s:persist() abort
   if exists('g:SessionLoad')
     return ''
@@ -74,14 +86,7 @@ function! s:persist() abort
       endif
       call writefile(body, g:this_obsession)
       let g:this_session = g:this_obsession
-      if exists('#User#Obsession')
-        try
-          let [save_mls, &modelines] = [&mls, 0]
-          doautocmd User Obsession
-        finally
-          let &mls = save_mls
-        endtry
-      endif
+      exe s:doautocmd_user('Obsession')
     catch
       unlet g:this_obsession
       let &l:readonly = &l:readonly
