@@ -57,7 +57,7 @@ endfunction
 function! s:doautocmd_user(arg) abort
   if !exists('#User#' . a:arg)
     return ''
-  elseif v:version >= 704 && 0
+  elseif v:version >= 704
     return 'doautocmd <nomodeline> User ' . fnameescape(a:arg)
   else
     return 'try | let [save_mls, &mls] = [&mls, 0] | ' .
