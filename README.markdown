@@ -19,8 +19,8 @@ no-hassle Vim sessions is a few tweaks:
 * Don't capture options and maps.  Options are sometimes mutilated and maps
   just interfere with updating plugins.
 
-Use `:Obsess` (with optional file/directory name) to start recording to a
-session file and `:Obsess!` to stop and throw it away.  That's it.  Load a
+Use `:Obsession` (with optional file/directory name) to start recording to a
+session file and `:Obsession!` to stop and throw it away.  That's it.  Load a
 session in the usual manner: `vim -S`, or `:source` it.
 
 There's also an indicator you can put in `'statusline'`, `'tabline'`, or
