@@ -12,6 +12,10 @@ USAGE                                           *obsession* *:Obsession*
                         it will be overwritten if and only if it looks like a
                         session file.
 
+                        Set `g:obsession_no_bufenter` to disable saving the
+                        session on |BufEnter|, improving performance at the
+                        expense of safety.
+
 :Obsession {dir}        Invoke |:Obsession| on {dir}/Session.vim.  Use "." to
                         write to a session file in the current directory.
 
