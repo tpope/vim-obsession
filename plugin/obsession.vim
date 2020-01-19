@@ -120,7 +120,7 @@ augroup obsession
   autocmd!
   autocmd VimLeavePre * exe s:persist()
   autocmd BufEnter *
-        \ if !get(g:, 'obsession_no_bufenter') |
+        \ if !get(g:, 'obsession_no_bufenter') && (&buftype !=# 'nofile' || len(expand('<afile>'))) |
         \   exe s:persist() |
         \ endif
   autocmd User Flags call Hoist('global', 'ObsessionStatus')
