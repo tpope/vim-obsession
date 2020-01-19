@@ -86,6 +86,8 @@ function! s:persist() abort
       call writefile(body, g:this_obsession)
       let g:this_session = g:this_obsession
       exe s:doautocmd_user('Obsession')
+    catch /^Vim(mksession):E11:/
+      return ''
     catch
       unlet g:this_obsession
       let &l:readonly = &l:readonly
@@ -120,7 +122,7 @@ augroup obsession
   autocmd!
   autocmd VimLeavePre * exe s:persist()
   autocmd BufEnter *
-        \ if !get(g:, 'obsession_no_bufenter') && (&buftype !=# 'nofile' || len(expand('<afile>'))) |
+        \ if !get(g:, 'obsession_no_bufenter') |
         \   exe s:persist() |
         \ endif
   autocmd User Flags call Hoist('global', 'ObsessionStatus')
