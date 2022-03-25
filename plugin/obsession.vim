@@ -3,7 +3,7 @@
 " Version:      1.0
 " GetLatestVimScripts: 4472 1 :AutoInstall: obsession.vim
 
-if exists("g:loaded_obsession") || v:version < 700 || &cp
+if exists("g:loaded_obsession") || v:version < 704 || &cp
   finish
 endif
 let g:loaded_obsession = 1
@@ -57,12 +57,8 @@ endfunction
 function! s:doautocmd_user(arg) abort
   if !exists('#User#' . a:arg)
     return ''
-  elseif v:version >= 704
-    return 'doautocmd <nomodeline> User ' . fnameescape(a:arg)
   else
-    return 'try | let [save_mls, &mls] = [&mls, 0] | ' .
-          \ 'doautocmd <nomodeline> User ' . fnameescape(a:arg) . ' | ' .
-          \ 'finally | let &mls = save_mls | endtry'
+    return 'doautocmd <nomodeline> User ' . fnameescape(a:arg)
   endif
 endfunction
 
