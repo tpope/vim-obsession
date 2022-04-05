@@ -68,9 +68,9 @@ function! s:persist() abort
   endif
   let sessionoptions = &sessionoptions
   if exists('g:this_obsession')
+    let tmp = g:this_obsession . '.' . getpid() . '.obsession~'
     try
       set sessionoptions-=blank sessionoptions-=options sessionoptions+=tabpages
-      let tmp = g:this_obsession . '.obsession.' . getpid()
       exe s:doautocmd_user('ObsessionPre')
       execute 'mksession!' fnameescape(tmp)
       let body = readfile(tmp)
