@@ -93,6 +93,7 @@ function! s:persist() abort
       return 'echoerr '.string(v:exception)
     finally
       let &sessionoptions = sessionoptions
+      call delete(tmp)
     endtry
   endif
   return ''
