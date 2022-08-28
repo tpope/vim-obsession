@@ -76,6 +76,7 @@ function! s:persist() abort
       let body = readfile(tmp)
       call insert(body, 'let g:this_session = v:this_session', -3)
       call insert(body, 'let g:this_obsession = v:this_session', -3)
+      call insert(body, '" socket=' . v:servername, -1)
       if type(get(g:, 'obsession_append')) == type([])
         for line in g:obsession_append
           call insert(body, line, -3)
