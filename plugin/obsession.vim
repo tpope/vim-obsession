@@ -73,7 +73,6 @@ function! s:persist() abort
       set sessionoptions-=blank sessionoptions-=options sessionoptions+=tabpages
       exe s:doautocmd_user('ObsessionPre')
       execute 'mksession!' fnameescape(tmp)
-      " successful mksession call will overwrite v:this_session to the tmp value, we need to restore it
       let v:this_session = g:this_obsession
       let body = readfile(tmp)
       call insert(body, 'let g:this_session = v:this_session', -3)
