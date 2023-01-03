@@ -18,6 +18,7 @@ function! s:dispatch(bang, file) abort
       echo 'Deleting session in '.fnamemodify(session, ':~:.')
       call delete(session)
       unlet! g:this_obsession
+      let v:this_session=''
       return ''
     elseif empty(a:file) && exists('g:this_obsession')
       echo 'Pausing session in '.fnamemodify(session, ':~:.')
