@@ -33,7 +33,7 @@ installing [pathogen.vim](https://github.com/tpope/vim-pathogen), and
 then simply copy and paste:
 
     cd ~/.vim/bundle
-    git clone git://github.com/tpope/vim-obsession.git
+    git clone https://github.com/tpope/vim-obsession.git
     vim -u NONE -c "helptags vim-obsession/doc" -c q
 
 ## Self-Promotion
